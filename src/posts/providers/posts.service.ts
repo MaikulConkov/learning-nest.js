@@ -31,13 +31,9 @@ export class PostsService {
   }
 
   public async delete(id: number) {
-    //Find the post
-    let post = await this.postsRepository.findOneBy({ id });
     //Deleting the post
     await this.postsRepository.delete(id);
-    //We delte the post first because postgre wont let me delete metaOptions if it has foreign key entry in another entity
-    //Delete metaoptions
-    await this.metaOptionsRepository.delete(post.metaOptions.id);
+
     //confirmation
     return { deleted: true, id };
   }

@@ -60,6 +60,5 @@ export class Post {
     cascade: true, //every action would cascade between metaOptions and post
     eager: true,
   })
-  @JoinColumn()
   metaOptions?: MetaOption;
 }
