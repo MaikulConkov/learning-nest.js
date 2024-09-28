@@ -56,7 +56,7 @@ export class Post {
 
   tags?: string[];
 
-  @OneToOne(() => MetaOption, {
+  @OneToOne(() => MetaOption, (metaOptions) => metaOptions.post, {
     cascade: true, //every action would cascade between metaOptions and post
     eager: true,
   })
