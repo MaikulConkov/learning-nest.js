@@ -18,6 +18,7 @@ import { postType } from '../enums/postType.enum';
 import { CreatePostMetaOptionsDto } from '../../meta-options/dtos/create-post-meta-otions.dto';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Tag } from 'src/tags/tag.entity';
 
 export class CreatePostDto {
   @ApiProperty({
@@ -95,14 +96,13 @@ export class CreatePostDto {
   publishOn?: Date;
 
   @ApiPropertyOptional({
-    description: 'An array of tags passed as string values',
-    example: "['nestJS', 'typescript']",
+    description: 'An array of ids of tags',
+    example: [1, 2],
   })
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })
-  @MinLength(3, { each: true })
-  tags?: string[];
+  @IsInt({ each: true })
+  tags?: number[];
 
   @ApiPropertyOptional({
     type: 'object',
