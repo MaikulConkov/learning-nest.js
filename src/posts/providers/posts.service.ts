@@ -18,7 +18,12 @@ export class PostsService {
     private readonly usersService: UsersService,
   ) {}
   public async findAll(userId: string) {
-    let posts = await this.postsRepository.find();
+    let posts = await this.postsRepository.find({
+      relations: {
+        metaOptions: true,
+        author: true,
+      },
+    });
 
     return posts;
   }
