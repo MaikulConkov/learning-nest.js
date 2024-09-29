@@ -57,7 +57,7 @@ export class Post {
   featuredImageUrl?: string;
 
   @Column({ type: 'timestamp', nullable: true })
-  publishedOn?: Date;
+  publishOn?: Date;
 
   @ManyToOne(() => User, (user) => user.posts)
   author: User;
