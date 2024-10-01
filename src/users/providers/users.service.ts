@@ -4,6 +4,8 @@ import {
   Inject,
   RequestTimeoutException,
   BadRequestException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { GetUsersParamsDto } from '../dtos/get-users-params.dto';
 import { AuthService } from 'src/auth/providers/auth.service';
@@ -77,13 +79,18 @@ export class UsersService {
     limit: number,
     page: number,
   ) {
-    const environment = this.configService.get('S3_BUCKETS');
-    console.log(environment);
-    const isAuth = this.authService.isAuth();
-    return [
-      { firstName: 'john', email: 'john@doe.com' },
-      { firstName: 'alice', email: 'alice@doe.com' },
-    ];
+    throw new HttpException(
+      {
+        status: HttpStatus.MOVED_PERMANENTLY,
+        error: 'API endpoint does not exist.',
+        fileName: 'users.service',
+        lineNumber: 87,
+      },
+      HttpStatus.MOVED_PERMANENTLY,
+      {
+        description: 'Occured because the API endpoint was permanently moved',
+      },
+    );
   }
 
   /**
