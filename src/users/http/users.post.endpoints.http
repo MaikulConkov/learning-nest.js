@@ -7,3 +7,24 @@ Content-Type: application/json
     "email": "john@doe.com",
     "password": "password23"
 }
+
+
+POST http://localhost:3000/users/create-many
+Content-Type: application/json
+
+{
+    "users":[
+        {
+            "firstName": "Kalina",
+            "lastName":"Conkova",
+            "email": "kali@conkova.com",
+            "password": "password23"    
+        },
+        {
+            "firstName": "Michael",
+            "lastName":"Conkov",
+            "email": "michael@conkov.com",
+            "password": "password23"    
+        }
+    ]
+}
