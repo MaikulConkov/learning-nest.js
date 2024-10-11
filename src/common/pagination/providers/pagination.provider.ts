@@ -10,7 +10,7 @@ export class PaginationProvider {
     /**
     Inject reqeust 
     */
-    @Inject(Request)
+    @Inject('REQUEST')
     private readonly request: Request,
   ) {}
   public async paginateQuery<T extends ObjectLiteral>(
