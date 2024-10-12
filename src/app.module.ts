@@ -11,6 +11,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import environmentValidation from './config/environment.validation';
+import jwtConfig from './auth/config/jwt.config';
+import { JwtModule } from '@nestjs/jwt';
 
 const ENV = process.env.NODE_ENV;
 
@@ -40,6 +42,8 @@ const ENV = process.env.NODE_ENV;
         database: configService.get('database.name'),
       }),
     }),
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
     TagsModule,
     MetaOptionsModule,
   ],
