@@ -3,6 +3,6 @@ Content-Type: application/json
 
 
 {
-    "email":"kali@conkova.com",
-    "password": "password23"
+    "email":"john@doe.com",
+    "password": "password123"
 }

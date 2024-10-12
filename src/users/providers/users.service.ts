@@ -6,6 +6,8 @@ import {
   BadRequestException,
   HttpException,
   HttpStatus,
+  NotFoundException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { GetUsersParamsDto } from '../dtos/get-users-params.dto';
 import { AuthService } from 'src/auth/providers/auth.service';
@@ -96,5 +98,22 @@ export class UsersService {
 
   public async findOneByEmail(email: string) {
     return await this.findOneByEmailProvider.findOneByEmail(email);
+  }
+
+  public async deleteUser(id: number) {
+    try {
+      const result = await this.usersRepository.delete(id);
+
+      if (result.affected === 0) {
+        throw new NotFoundException(`User with id ${id} not found`);
+      }
+
+      return { deleted: true, id };
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      throw new InternalServerErrorException(
+        'There was a problem deleting the user',
+      );
+    }
   }
 }

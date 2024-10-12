@@ -6,43 +6,43 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { JwtService, TokenExpiredError } from '@nestjs/jwt';
-import { Request } from 'express';
-import { Observable } from 'rxjs';
+import { JwtService } from '@nestjs/jwt';
 import jwtConfig from 'src/auth/config/jwt.config';
+import { Request } from 'express';
 import { REQUEST_USER_KEY } from 'src/auth/constants/auth.constants';
 
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
-
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) {}
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    //extract the request from the excecution context
+    // Extract the request from the execution context
     const request = context.switchToHttp().getRequest();
-    //extract the token from header
-    const token = this.extractRequestFromHeader(request);
+    // Extract the token from the header
+    const token = this.extractTokenFromHeader(request);
+
     if (!token) {
       throw new UnauthorizedException();
     }
-    //validate the token
     try {
       const payload = await this.jwtService.verifyAsync(
         token,
         this.jwtConfiguration,
       );
       request[REQUEST_USER_KEY] = payload;
-      console.log(payload);
-    } catch {
-      throw new UnauthorizedException();
+      console.log(payload); // This should now log the payload if the token is valid
+    } catch (error) {
+      console.error('JWT Verification Error:', error); // Log the actual error
+      throw new UnauthorizedException('Invalid token');
     }
     return true;
   }
 
-  private extractRequestFromHeader(request: Request): string | undefined {
+  private extractTokenFromHeader(request: Request): string | undefined {
     const [_, token] = request.headers.authorization?.split(' ') ?? [];
     return token;
   }

@@ -59,7 +59,10 @@ export class Post {
   @Column({ type: 'timestamp', nullable: true })
   publishOn?: Date;
 
-  @ManyToOne(() => User, (user) => user.posts, { eager: true })
+  @ManyToOne(() => User, (user) => user.posts, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   author: User;
 
   @ManyToMany(() => Tag, (tag) => tag.posts, { eager: true })

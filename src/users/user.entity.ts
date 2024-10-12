@@ -23,6 +23,7 @@ export class User {
     (post) => {
       post.author;
     },
+    { cascade: true },
   )
   posts: Post;
 }
